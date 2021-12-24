@@ -1,5 +1,4 @@
-import { Suspense, useEffect, useMemo } from 'react';
-import logo from './logo.svg';
+import React, { Suspense, useEffect, useMemo } from 'react';
 import messages_en from './assets/i18n/en.json';
 import './App.less';
 import { INITIALIZE_FIREBASE, useFirebase } from './hooks/firebase/FirebaseContext';
@@ -13,6 +12,7 @@ import NoMatch from './NoMatch';
 import Login from './pages/auth/Login';
 import Dashboard from './pages/dashboard/Dashboard';
 import AppProtected from './AppProtected';
+const Register = React.lazy(() => import("./pages/auth/Register"));
 
 const App = () => {
   const { firebaseState, firebaseDispatch } = useFirebase();
@@ -54,6 +54,7 @@ const App = () => {
           <Suspense fallback={<Spin />}>
             <Routes>
               <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
               <Route path="/" element={<AppProtected />}>
                 <Route index element={<Dashboard />} />
                 {renderProtectedRoutes}

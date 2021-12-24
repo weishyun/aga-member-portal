@@ -1,3 +1,11 @@
 {
-    
+    "AUTH_LOGIN_TITLE": "Login to AGA Account",
+    "AUTH_EMAIL_LOGIN": "Login with Email",
+    "AUTH_GOOGLE_LOGIN": "Login with Google",
+    "AUTH_MICROSOFT_LOGIN": "Login with Microsoft",
+    "AUTH_FACEBOOK_LOGIN": "Login with Facebook",
+    "AUTH_GITHUB_LOGIN": "Login with GitHub",
+    "AUTH_NO_ACCOUNT": "Don't have account?",
+    "AUTH_CREATE_ACCOUNT": "Create account",
+    "COPY_RIGHT": "© Ace Gig Alert | Copyright 2022. All Rights Reserved."
 }

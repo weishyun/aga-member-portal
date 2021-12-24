@@ -1,72 +1,61 @@
-import { Alert, Button, Form, Input } from "antd";
-import { LoginOutlined } from '@ant-design/icons';
+
 import "./Auth.less";
 import { useState } from "react";
 import useAuthAction from "../../hooks/auth/useAuthAction";
 import useSpinner from "../../hooks/layout/useSpinner";
+import backgroundWithLogo from '../../assets/images/background-with-logo.svg';
+import iconEmail from '../../assets/images/icon-email.svg';
+import iconGoogle from '../../assets/images/icon-google.svg';
+import iconMicrosoft from '../../assets/images/icon-microsoft.svg';
+import iconFacebook from '../../assets/images/icon-facebook.svg';
+import iconGithub from '../../assets/images/icon-github.svg';
+import logo from '../../assets/images/logo-with-name.svg';
+import { FormattedMessage } from "react-intl";
+import { Button, Space } from "antd";
+import { Provider } from "../../hooks/auth/provider.enum";
 
 const Login = () => {
     const [errorMessage, setErrorMessage] = useState('');
-    const { login } = useAuthAction();
+    const { loginWithSocial } = useAuthAction();
     const { setLoading } = useSpinner();
-
-    const onFinish = async (values: any) => {
-        setErrorMessage('');
-        setLoading(true);
-        const result = await login(values.email, values.password);
-        setLoading(false);
-        if (!result.success) {
-            switch (result.code) {
-                case 'auth/user-not-found':
-                case 'auth/wrong-password':
-                    setErrorMessage('Invalid email or password!')
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
 
     return (
         <div className="auth-fullpage-container">
-            <div className="app-form-small-container">
-                <div className="header-band">
-                    {/* <div className="product-logo"><img src={logo} alt="logo" /></div>
-                    <Divider type="vertical" className="login-title-divider" /> */}
-                    <h2 className="header-2">Ace Gig Alert</h2>
-                </div>
-                {errorMessage && <Alert message={errorMessage} type="error" />}
-                <Form className="login-form"
-                    layout="vertical"
-                    initialValues={{ remember: true }}
-                    onFinish={onFinish}>
-                    <Form.Item
-                        label="Email"
-                        name="email"
-                        rules={[{ required: true, message: 'Please input your email!' },
-                        { type: 'email', message: 'Please enter a valid email.' }]}>
-                        <Input placeholder="Email" maxLength={255} />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Password"
-                        name="password"
-                        rules={[
-                            { required: true, message: 'Please input your password!' },
-                            { min: 8, message: "Password must be at least 8 characters alphanumeric password" },
-                            {
-                                pattern: /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#():;"'<>?/~`.,^}{\-_=+])[A-Za-z\d@$!%*?&#():;"'<>?/~`.,^}{\-_=+]{8,}/,
-                                message: "Password must be alphanumeric with at least one special character, lowercase and uppercase."
-                            }]}
-                    >
-                        <Input.Password placeholder="Password" maxLength={100} />
-                    </Form.Item>
-                    <Form.Item>
-                        <Button type="primary" block htmlType="submit">
-                            <LoginOutlined />Login
+            <img className="background-with-logo" src={backgroundWithLogo} alt="Ace Gig Alert" />
+            <div className="login-zone">
+                <div className="auth-inner-container">
+                    <img src={logo} alt="Ace Gig Alert" />
+                    <h2><FormattedMessage id="AUTH_LOGIN_TITLE" /></h2>
+                    <Space direction="vertical" size="middle" className="auth-button-group">
+                        <Button icon={<img src={iconGoogle} alt="Google" />} block size="large"
+                            onClick={() => loginWithSocial(Provider.Google)}>
+                            <FormattedMessage id="AUTH_GOOGLE_LOGIN" />
                         </Button>
-                    </Form.Item>
-                </Form>
+                        <Button icon={<img src={iconMicrosoft} alt="Microsoft" />} block size="large">
+                            <FormattedMessage id="AUTH_MICROSOFT_LOGIN" />
+                        </Button>
+                        <Button icon={<img src={iconFacebook} alt="Facebook" />} block size="large"
+                            onClick={() => loginWithSocial(Provider.Facebook)}>
+                            <FormattedMessage id="AUTH_FACEBOOK_LOGIN" />
+                        </Button>
+                        <Button icon={<img src={iconGithub} alt="GitHub" />} block size="large"
+                            onClick={() => loginWithSocial(Provider.GitHub)}>
+                            <FormattedMessage id="AUTH_GITHUB_LOGIN" />
+                        </Button>
+                        <Button icon={<img src={iconEmail} alt="Email" />} block size="large">
+                            <FormattedMessage id="AUTH_EMAIL_LOGIN" />
+                        </Button>
+                        <div>
+                            <FormattedMessage id="AUTH_NO_ACCOUNT" />
+                            <Button type="link">
+                                <FormattedMessage id="AUTH_CREATE_ACCOUNT" />
+                            </Button>
+                        </div>
+                    </Space>
+                </div>
+                <h5>
+                    <FormattedMessage id="COPY_RIGHT" />
+                </h5>
             </div>
         </div>
     )

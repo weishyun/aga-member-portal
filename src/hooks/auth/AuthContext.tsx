@@ -43,7 +43,7 @@ const reducer = (state: AuthState, action: { type: string, payload: any }): Auth
         case CLEAR_CURRENT_USER:
             return INITIAL_STATE;
         case SET_SIDE_NAV:
-            return { ...state, sideNav: [...payload] };
+            return { ...state, sideNav: payload ? [...payload] : [] };
         default:
             return state;
     }

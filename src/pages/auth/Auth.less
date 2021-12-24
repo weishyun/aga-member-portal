@@ -1,75 +1,64 @@
 .auth-fullpage-container {
-    //background-image: url('../../assets/images/background.jpg');
-    background-position: center;
-    background-size: cover;
     width: 100%;
     height: 100vh;
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding-top: 12vh;
-
-    @media (max-width: 767px) {
-        padding-top: 5vh;
-    }
-}
-
-.login-form {
-    margin-top: 20px;
-}
-
-// .app-form-small-container {
-//     margin-top: 12vh;
-//     max-width: 500px;
-
-//     @media (max-width: 767px) {
-//         margin-top: 5vh;
-//     }
-
-// }
-
-.header-band {
+    background-color: white;
     display: flex;
-    justify-content: center;
-    background-color: @primary-color;
-    width: calc(100% + 36px + 56px);
-    margin-bottom: 2vh;
-    position: relative;
-    left: -46px;
-    right: -46px;
-    padding: 12px 0;
 
-    .left-shadow-img {
-        width: 18px;
-        height: 10px;
-        position: absolute;
-        bottom: -10px;
-        left: 0;
+    .logo-zone {
+        height: 100%;
     }
 
-    .right-shadow-img {
-        width: 18px;
-        height: 10px;
-        position: absolute;
-        right: 0;
-        bottom: -10px
+    .login-zone {
+        flex: 1;
+        background-image: url('../../assets/images/background-curve.svg');
+        background-position: right bottom;
+        background-repeat: no-repeat;
+        background-size: 70%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
-    .header-2 {
-        color: #fff;
+    .background-with-logo {
+        display: block;
+
+        @media only screen and (max-width: 768px) {
+            display: none;
+        }
     }
 
-    @media (max-width: 767px) {
-        left: -28px;
-        right: -28px;
-        width: calc(100% + 56px);
+    .auth-inner-container {
+        width: 380px;
+        margin: auto;
 
-        .left-shadow-img {
+        >img {
             display: none;
         }
 
-        .right-shadow-img {
-            display: none;
+        @media only screen and (max-width: 768px) {
+            text-align: center;
+            width: 348px;
+
+            >img {
+                display: inline;
+                margin-bottom: 20px;
+            }
+        }
+    }
+
+    .auth-button-group {
+        width: 100%;
+
+        >div:not(:last-child) {
+            button {
+                display: flex;
+            }
+        }
+
+        img {
+            margin-left: 25%;
+            margin-right: 8px;
         }
     }
 }
