@@ -1,19 +1,20 @@
 import {
     signInWithEmailAndPassword, User, signInWithPopup,
-    setPersistence, browserLocalPersistence, GoogleAuthProvider, GithubAuthProvider, FacebookAuthProvider
+    setPersistence, browserLocalPersistence, GoogleAuthProvider, GithubAuthProvider, FacebookAuthProvider, OAuthProvider
 } from "@firebase/auth";
 import { useFirebase } from "../firebase/FirebaseContext";
 import { CLEAR_CURRENT_USER, SET_CURRENT_USER, SET_LOGIN_STATUS, SET_SIDE_NAV, useAuth } from "./AuthContext";
 import { useLocation, useNavigate } from "react-router";
 import useFirebaseDB from "../firebase/useFirebaseDB";
 import { Provider } from "./provider.enum";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const useAuthAction = () => {
     const { authDispatch } = useAuth();
     const { firebaseState } = useFirebase();
     const { getById } = useFirebaseDB();
     const nav = useNavigate();
-    const location = useLocation();
+    const { state } = useLocation();
 
     const checkLogin = () => {
         const { auth } = firebaseState;
@@ -21,9 +22,8 @@ const useAuthAction = () => {
             if (user) {
                 //user is signed in
                 const tokenClaim = await user.getIdTokenResult();
-                console.log('hit', user)
                 if (!tokenClaim?.claims?.role) {
-                    nav('/register', { replace: true });
+                    nav('/auth/register', { replace: true });
                     return;
                 }
 
@@ -37,7 +37,7 @@ const useAuthAction = () => {
                 });
                 authDispatch({ type: SET_LOGIN_STATUS, payload: true });
                 loadSideNav(tokenClaim.claims.role as string);
-                const fromPathname = location?.state?.from?.pathname;
+                const fromPathname = (state as any)?.from?.pathname;
                 if (fromPathname) {
                     nav(fromPathname, { replace: true });
                 } else {
@@ -47,7 +47,7 @@ const useAuthAction = () => {
                 //user is signed out
                 authDispatch({ type: CLEAR_CURRENT_USER });
                 authDispatch({ type: SET_LOGIN_STATUS, payload: false });
-                nav('/login', { replace: true });
+                nav('/auth', { replace: true });
             }
         })
     }
@@ -90,7 +90,23 @@ const useAuthAction = () => {
             //TODO: create data into users table            
 
         } catch (error: any) {
-            console.log(error)
+            console.error(error)
+            return { success: false, code: error.code, message: error.message };
+        }
+    }
+
+    const createPasswordAccount = async (email: string, password: string) => {
+        const { auth } = firebaseState;
+        if (!auth) {
+            return { success: false };
+        }
+
+        await setPersistence(auth, browserLocalPersistence);
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+            console.log(userCredential.user);
+        } catch (error: any) {
+            console.error(error)
             return { success: false, code: error.code, message: error.message };
         }
     }
@@ -98,11 +114,15 @@ const useAuthAction = () => {
     const getProvider = (selectedProvider: Provider) => {
         switch (selectedProvider) {
             case Provider.Google:
-                return new GoogleAuthProvider();
+                const googleProvider = new GoogleAuthProvider()
+                googleProvider.addScope('https://www.googleapis.com/auth/userinfo.email');
+                return googleProvider;
             case Provider.Facebook:
-                const provider = new FacebookAuthProvider()
-                provider.addScope('email');
-                return provider;
+                const facebookProvider = new FacebookAuthProvider()
+                facebookProvider.addScope('email');
+                return facebookProvider;
+            case Provider.Microsoft:
+                return new OAuthProvider('microsoft.com');
             case Provider.GitHub:
                 return new GithubAuthProvider();
             default:
@@ -117,6 +137,7 @@ const useAuthAction = () => {
 
     return {
         checkLogin,
+        createPasswordAccount,
         login,
         loginWithSocial,
         logout

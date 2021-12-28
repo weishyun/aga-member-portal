@@ -12,7 +12,9 @@ import NoMatch from './NoMatch';
 import Login from './pages/auth/Login';
 import Dashboard from './pages/dashboard/Dashboard';
 import AppProtected from './AppProtected';
+import Auth from './pages/auth/Auth';
 const Register = React.lazy(() => import("./pages/auth/Register"));
+const CreateAccount = React.lazy(() => import("./pages/auth/CreateAccount"));
 
 const App = () => {
   const { firebaseState, firebaseDispatch } = useFirebase();
@@ -53,8 +55,12 @@ const App = () => {
         <Layout className="app-container">
           <Suspense fallback={<Spin />}>
             <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
+              <Route path="/auth" element={<Auth />}>
+                <Route index element={<Login />} />
+                <Route path="/auth/register" element={<Register />} />
+                <Route path="/auth/create-account" element={<CreateAccount />} />
+              </Route>
+              {/* <Route path="/login" element={<Login />} /> */}
               <Route path="/" element={<AppProtected />}>
                 <Route index element={<Dashboard />} />
                 {renderProtectedRoutes}

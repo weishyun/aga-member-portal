@@ -32,9 +32,9 @@ const reducer = (state: FirebaseState, action: { type: string, payload: any }): 
             const auth = getAuth(app);
             const db = getDatabase(app);
             const store = getFirestore(app);
-            connectFirestoreEmulator(store, 'localhost', 8080);
+            //connectFirestoreEmulator(store, 'localhost', 8080);
             const functions = getFunctions(app);
-            connectFunctionsEmulator(functions, "localhost", 5001);
+            //connectFunctionsEmulator(functions, "localhost", 5001);
             return { ...state, app, auth, db, store, functions }
         default:
             return state;

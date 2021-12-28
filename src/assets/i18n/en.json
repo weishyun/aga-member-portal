@@ -7,5 +7,15 @@
     "AUTH_GITHUB_LOGIN": "Login with GitHub",
     "AUTH_NO_ACCOUNT": "Don't have account?",
     "AUTH_CREATE_ACCOUNT": "Create account",
-    "COPY_RIGHT": "© Ace Gig Alert | Copyright 2022. All Rights Reserved."
+    "AUTH_CREATE_AGA_ACCOUNT": "Create AGA account",
+    "AUTH_VALIDATE_PASSWORD": "8 or more characters",
+    "AUTH_VALIDATE_PASSWORD_MIXTURE": "Use mix of letters & numbers",
+    "AUTH_VALIDATE_CONFIRM": "Those passwords do not match",
+    "COPY_RIGHT": "© Ace Gig Alert | Copyright 2022. All Rights Reserved.",
+    "GENERAL_NEXT": "Next",
+    "GENERAL_REQUIRED": "Required",
+    "LABEL_DISPLAY_NAME": "Display Name",
+    "LABEL_EMAIL": "Email",
+    "LABEL_PASSWORD": "Password",
+    "LABEL_CONFIRM_PASSWORD": "Confirm Password"
 }

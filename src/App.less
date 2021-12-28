@@ -1,1 +1,6 @@
 @import '~antd/dist/antd.less';
+
+// show only first error
+form div.ant-form-item-explain .ant-form-item-explain-error:not(:first-child) {
+    display: none;
+}

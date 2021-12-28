@@ -76,25 +76,25 @@ self.addEventListener('message', (event) => {
 // Any other custom service worker logic can go here.
 
 self.addEventListener('install', event => {
-    self.skipWaiting();
-  });
-  
-  
-  self.addEventListener('activate', (event) => {
-    const currentVersion = '20211217-1601';
-    const versionKey = 'aga-u-version';
-    localForage.getItem(versionKey).then(v => {
-      if (v != currentVersion) {
-        console.log('set');
-        event.waitUntil(() => {
-  
-          caches.keys().then((cacheNames) => {
-            for (let name of cacheNames)
-              caches.delete(name);
-          })
-        });
-      }
-      console.log(currentVersion);
-      return localForage.setItem(versionKey, currentVersion);
-    })
-  });
+  self.skipWaiting();
+});
+
+
+self.addEventListener('activate', (event) => {
+  const currentVersion = '20211217-1601';
+  const versionKey = 'aga-u-version';
+  localForage.getItem(versionKey).then(v => {
+    if (v != currentVersion) {
+      console.log('set');
+      event.waitUntil(() => {
+
+        caches.keys().then((cacheNames) => {
+          for (let name of cacheNames)
+            caches.delete(name);
+        })
+      });
+    }
+    console.log(currentVersion);
+    return localForage.setItem(versionKey, currentVersion);
+  })
+});
