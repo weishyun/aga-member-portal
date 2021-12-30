@@ -15,6 +15,7 @@ import AppProtected from './AppProtected';
 import Auth from './pages/auth/Auth';
 const Register = React.lazy(() => import("./pages/auth/Register"));
 const CreateAccount = React.lazy(() => import("./pages/auth/CreateAccount"));
+const PasswordLogin = React.lazy(() => import("./pages/auth/PasswordLogin"));
 
 const App = () => {
   const { firebaseState, firebaseDispatch } = useFirebase();
@@ -57,8 +58,9 @@ const App = () => {
             <Routes>
               <Route path="/auth" element={<Auth />}>
                 <Route index element={<Login />} />
-                <Route path="/auth/register" element={<Register />} />
                 <Route path="/auth/create-account" element={<CreateAccount />} />
+                <Route path="/auth/password-login" element={<PasswordLogin />} />
+                <Route path="/auth/register" element={<Register />} />
               </Route>
               {/* <Route path="/login" element={<Login />} /> */}
               <Route path="/" element={<AppProtected />}>

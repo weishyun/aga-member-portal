@@ -39,9 +39,11 @@ const Login = () => {
                     onClick={() => loginWithSocial(Provider.GitHub)}>
                     <FormattedMessage id="AUTH_GITHUB_LOGIN" />
                 </Button>
-                <Button icon={<img src={iconEmail} alt="Email" />} block size="large">
-                    <FormattedMessage id="AUTH_EMAIL_LOGIN" />
-                </Button>
+                <Link to="/auth/password-login">
+                    <Button icon={<img src={iconEmail} alt="Email" />} block size="large">
+                        <FormattedMessage id="AUTH_EMAIL_LOGIN" />
+                    </Button>
+                </Link>
                 <div>
                     <FormattedMessage id="AUTH_NO_ACCOUNT" />
                     <Link to="/auth/create-account">

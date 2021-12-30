@@ -1,9 +1,11 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Space } from "antd";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useNavigate } from "react-router-dom";
 import useAuthAction from "../../hooks/auth/useAuthAction";
 
 const CreateAccount = () => {
     const intl = useIntl();
+    const nav = useNavigate();
     const { createPasswordAccount } = useAuthAction();
 
     const onFinish = async (values: any) => {
@@ -49,9 +51,14 @@ const CreateAccount = () => {
                 <Input.Password maxLength={100} />
             </Form.Item>
             <Form.Item>
-                <Button type="primary" block htmlType="submit">
-                    <FormattedMessage id="GENERAL_NEXT" />
-                </Button>
+                <Space direction="vertical" className="auth-space-full-width">
+                    <Button type="primary" block htmlType="submit">
+                        <FormattedMessage id="GENERAL_NEXT" />
+                    </Button>
+                    <Button block htmlType="button" onClick={() => { nav(-1) }}>
+                        <FormattedMessage id="LABEL_BACK" />
+                    </Button>
+                </Space>
             </Form.Item>
         </Form>
     </>)
