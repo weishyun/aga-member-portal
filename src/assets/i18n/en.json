@@ -1,4 +1,5 @@
 {
+    "AUTH_ACCOUNT_REG": "Account Registration",
     "AUTH_CREATE_ACCOUNT": "Create account",
     "AUTH_CREATE_AGA_ACCOUNT": "Create AGA account",
     "AUTH_EMAIL_LOGIN": "Login with Email",
@@ -8,9 +9,19 @@
     "AUTH_LOGIN_TITLE": "Login to AGA Account",
     "AUTH_MICROSOFT_LOGIN": "Login with Microsoft",
     "AUTH_NO_ACCOUNT": "Don't have account?",
+    "AUTH_REG_EMP_1": "Manage payroll & leaves for FREE",
+    "AUTH_REG_EMP_2": "Manage claim without hassle",
+    "AUTH_REG_EMP_3": "Post job ads",
+    "AUTH_REG_EMP_4": "Discover potential talents",
+    "AUTH_REG_GIG_1": "Manage attractive porfolio for FREE",
+    "AUTH_REG_GIG_2": "Seek contract or permanent employment",
+    "AUTH_REG_GIG_3": "Manage team with payroll & leaves features",
+    "AUTH_REG_GIG_4": "Connect potential clients",
     "AUTH_VALIDATE_CONFIRM": "Those passwords do not match",
     "AUTH_VALIDATE_PASSWORD": "8 or more characters",
     "AUTH_VALIDATE_PASSWORD_MIXTURE": "Use mix of letters & numbers",
+    "AUTH_VALIDATE_LOGIN": "Invalid email or password!",
+    "AUTH_VALIDATE_REGISTER": "Email is already in use!",
     "COPY_RIGHT": "© Ace Gig Alert | Copyright 2022. All Rights Reserved.",
     "GENERAL_NEXT": "Next",
     "GENERAL_REQUIRED": "Required",
@@ -18,6 +29,9 @@
     "LABEL_CONFIRM_PASSWORD": "Confirm Password",
     "LABEL_DISPLAY_NAME": "Display Name",
     "LABEL_EMAIL": "Email",
+    "LABEL_EMPLOYER": "Employer",
+    "LABEL_GIG": "Gig Worker",
     "LABEL_LOGIN": "Login",
-    "LABEL_PASSWORD": "Password"
+    "LABEL_PASSWORD": "Password",
+    "LABEL_STEP": "Step {index} of {total}"
 }

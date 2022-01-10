@@ -11,12 +11,13 @@ const PasswordLogin = () => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const onFinish = async (values: any) => {
+        setErrorMessage('');
         const result = await login(values.email, values.password);
         if (!result.success) {
             switch (result.code) {
                 case 'auth/user-not-found':
                 case 'auth/wrong-password':
-                    setErrorMessage('Invalid email or password!')
+                    setErrorMessage(intl.formatMessage({ id: 'AUTH_VALIDATE_LOGIN' }));
                     break;
                 default:
                     break;
@@ -28,7 +29,7 @@ const PasswordLogin = () => {
         <>
             <h2><FormattedMessage id="AUTH_LOGIN_TITLE" /></h2>
             {errorMessage && <Alert message={errorMessage} type="error" />}
-            <br/>
+            <br />
             <Form className="login-form"
                 layout="vertical"
                 onFinish={onFinish}>

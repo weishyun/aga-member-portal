@@ -62,7 +62,44 @@
         }
     }
 
-    .auth-space-full-width{
+    .auth-space-full-width {
         width: 100%;
+    }
+}
+
+.account-type-container {
+    text-align: left;
+
+    img {
+        margin-right: 8px;
+        height: 64px;
+        border-radius: 50%;
+    }
+
+    >div>div {
+        cursor: pointer;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        padding: 12px 24px;
+        margin: 8px 0;
+    }
+
+    >div>div:hover {
+        border: 1px solid fade(@primary-color, 30%);
+    }
+
+    .account-type-title {
+        display: flex;
+        align-items: center;
+        padding-bottom: 8px;
+    }
+
+    .selected-account {
+        background-color: fade(@primary-color, 10%);
+        box-shadow: 4px 4px 8px 2px gray;
+    }
+
+    button {
+        margin-bottom: 12px;
     }
 }

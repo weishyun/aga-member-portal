@@ -87,6 +87,7 @@ const useAuthAction = () => {
 
             // The signed-in user info.
             const user = result.user;
+            console.log(user)
             //TODO: create data into users table            
 
         } catch (error: any) {
@@ -103,8 +104,8 @@ const useAuthAction = () => {
 
         await setPersistence(auth, browserLocalPersistence);
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-            console.log(userCredential.user);
+            await createUserWithEmailAndPassword(auth, email, password)
+            return { success: true };
         } catch (error: any) {
             console.error(error)
             return { success: false, code: error.code, message: error.message };
