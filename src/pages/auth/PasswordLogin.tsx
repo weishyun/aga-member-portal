@@ -30,7 +30,7 @@ const PasswordLogin = () => {
             <h2><FormattedMessage id="AUTH_LOGIN_TITLE" /></h2>
             {errorMessage && <Alert message={errorMessage} type="error" />}
             <br />
-            <Form className="login-form"
+            <Form
                 layout="vertical"
                 onFinish={onFinish}>
                 <Form.Item

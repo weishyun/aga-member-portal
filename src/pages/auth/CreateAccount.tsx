@@ -29,7 +29,7 @@ const CreateAccount = () => {
         <h2><FormattedMessage id="AUTH_CREATE_AGA_ACCOUNT" /> (<FormattedMessage id="LABEL_STEP" values={{ 'index': '1', 'total': '3' }} />)</h2>
         {errorMessage && <Alert message={errorMessage} type="error" />}
         <br />
-        <Form className="login-form"
+        <Form
             layout="vertical"
             onFinish={onFinish}>
             <Form.Item

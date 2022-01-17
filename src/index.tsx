@@ -8,15 +8,18 @@ import { LayoutProvider } from './hooks/layout/LayoutContext';
 import { AuthProvider } from './hooks/auth/AuthContext';
 import { FirebaseProvider } from './hooks/firebase/FirebaseContext';
 import { BrowserRouter } from 'react-router-dom';
+import { MasterDataProvider } from './hooks/master-data/MasterDataContext';
 
 ReactDOM.render(
   //<React.StrictMode>
   <LayoutProvider>
     <AuthProvider>
       <FirebaseProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <MasterDataProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </MasterDataProvider>
       </FirebaseProvider>
     </AuthProvider>
   </LayoutProvider>,

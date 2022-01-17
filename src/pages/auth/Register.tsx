@@ -1,12 +1,21 @@
 import { Button, Space } from "antd";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
+import { useNavigate } from "react-router-dom";
 import iconEmployer from '../../assets/images/icon-employer.svg';
 import iconGig from '../../assets/images/icon-gig.svg';
 
 const Register = () => {
+    const nav = useNavigate();
     const [selectedAccountType, setSelectedAccountType] = useState('employer');
 
+    const goToStep3 = () => {
+        if (selectedAccountType === 'employer') {
+            nav('/auth/register-employer');
+        } else {
+            nav('/auth/register-gig');
+        }
+    }
 
     return (
         <>
@@ -38,7 +47,7 @@ const Register = () => {
                         <li><FormattedMessage id="AUTH_REG_GIG_4" /></li>
                     </ul>
                 </div>
-                <Button type="primary" block htmlType="submit">
+                <Button type="primary" block onClick={goToStep3}>
                     <FormattedMessage id="GENERAL_NEXT" />
                 </Button>
             </Space>

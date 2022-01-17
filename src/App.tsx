@@ -14,6 +14,8 @@ import Dashboard from './pages/dashboard/Dashboard';
 import AppProtected from './AppProtected';
 import Auth from './pages/auth/Auth';
 const Register = React.lazy(() => import("./pages/auth/Register"));
+const RegisterEmployer = React.lazy(() => import("./pages/auth/RegisterEmployer"));
+const RegisterGig = React.lazy(() => import("./pages/auth/RegisterGig"));
 const CreateAccount = React.lazy(() => import("./pages/auth/CreateAccount"));
 const PasswordLogin = React.lazy(() => import("./pages/auth/PasswordLogin"));
 
@@ -61,6 +63,8 @@ const App = () => {
                 <Route path="/auth/create-account" element={<CreateAccount />} />
                 <Route path="/auth/password-login" element={<PasswordLogin />} />
                 <Route path="/auth/register" element={<Register />} />
+                <Route path="/auth/register-employer" element={<RegisterEmployer />} />
+                <Route path="/auth/register-gig" element={<RegisterGig />} />
               </Route>
               {/* <Route path="/login" element={<Login />} /> */}
               <Route path="/" element={<AppProtected />}>
