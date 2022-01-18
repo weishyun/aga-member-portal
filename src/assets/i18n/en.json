@@ -19,6 +19,8 @@
     "AUTH_REG_GIG_3": "Manage team with payroll & leaves features",
     "AUTH_REG_GIG_4": "Connect potential clients",
     "AUTH_REG_GIG_TITLE": "Register As Gig Worker",
+    "AUTH_SUBSCRIPTION": "Get notified for exciting promotions.",
+    "AUTH_AGREE_TERM": "By clicking 'Register' button, you agree to our {term} and {privacy}",
     "AUTH_VALIDATE_CONFIRM": "Those passwords do not match",
     "AUTH_VALIDATE_PASSWORD": "8 or more characters",
     "AUTH_VALIDATE_PASSWORD_MIXTURE": "Use mix of letters & numbers",
@@ -39,7 +41,9 @@
     "LABEL_GIG": "Gig Worker",
     "LABEL_LOGIN": "Login",
     "LABEL_PASSWORD": "Password",
+    "LABEL_PRIVACY": "Privacy Policy",
     "LABEL_REGISTER": "Register",
     "LABEL_SELECT_ONE": "Select One",
-    "LABEL_STEP": "Step {index} of {total}"
+    "LABEL_STEP": "Step {index} of {total}",
+    "LABEL_TERM": "Term of use"
 }

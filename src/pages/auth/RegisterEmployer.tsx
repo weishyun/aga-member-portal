@@ -1,7 +1,7 @@
-import { Alert, Button, Form, Input, Select, Space } from "antd";
+import { Alert, Button, Checkbox, Form, Input, Select, Space } from "antd";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMasterData } from "../../hooks/master-data/MasterDataContext";
 import useBusinessNature from "../../hooks/master-data/useBusinessNature";
 import CountrySelector from "../../shared/components/CountrySelector";
@@ -75,6 +75,18 @@ const RegisterEmployer = () => {
                 <Form.Item name="country"
                     label={<FormattedMessage id="LABEL_COUNTRY" />}>
                     <CountrySelector />
+                </Form.Item>
+                <Form.Item name="subscribe" valuePropName="checked">
+                    <Checkbox>
+                        <FormattedMessage id="AUTH_SUBSCRIPTION" />
+                    </Checkbox>
+                </Form.Item>
+                <Form.Item>
+                    <FormattedMessage id="AUTH_AGREE_TERM"
+                        values={{
+                            term: <Link to="/term-of-use"><FormattedMessage id="LABEL_TERM" /></Link>,
+                            privacy: <Link to="/privacy-policy"><FormattedMessage id="LABEL_PRIVACY" /></Link>
+                        }} />
                 </Form.Item>
                 <Form.Item>
                     <Space direction="vertical" className="auth-space-full-width">

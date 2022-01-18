@@ -4,7 +4,7 @@ import './App.less';
 import { INITIALIZE_FIREBASE, useFirebase } from './hooks/firebase/FirebaseContext';
 import useAuthAction from './hooks/auth/useAuthAction';
 import { useLayout } from './hooks/layout/LayoutContext';
-import { protectedRoutes, RouteInfo } from './protected-routes';
+import { protectedRoutes, RouteInfo } from './routes-protected';
 import { Route, Routes } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
 import { Layout, Spin } from 'antd';
@@ -13,11 +13,9 @@ import Login from './pages/auth/Login';
 import Dashboard from './pages/dashboard/Dashboard';
 import AppProtected from './AppProtected';
 import Auth from './pages/auth/Auth';
-const Register = React.lazy(() => import("./pages/auth/Register"));
-const RegisterEmployer = React.lazy(() => import("./pages/auth/RegisterEmployer"));
-const RegisterGig = React.lazy(() => import("./pages/auth/RegisterGig"));
-const CreateAccount = React.lazy(() => import("./pages/auth/CreateAccount"));
-const PasswordLogin = React.lazy(() => import("./pages/auth/PasswordLogin"));
+import { anonymousRoutes } from './routes-anonymous';
+const Term = React.lazy(() => import("./pages/terms/Terms"));
+const Privacy = React.lazy(() => import("./pages/terms/Privacy"));
 
 const App = () => {
   const { firebaseState, firebaseDispatch } = useFirebase();
@@ -60,14 +58,16 @@ const App = () => {
             <Routes>
               <Route path="/auth" element={<Auth />}>
                 <Route index element={<Login />} />
-                <Route path="/auth/create-account" element={<CreateAccount />} />
-                <Route path="/auth/password-login" element={<PasswordLogin />} />
-                <Route path="/auth/register" element={<Register />} />
-                <Route path="/auth/register-employer" element={<RegisterEmployer />} />
-                <Route path="/auth/register-gig" element={<RegisterGig />} />
+                {
+                  anonymousRoutes.map((a) =>
+                    <Route key={a.name} path={a.path} element={<a.component />} />
+                  )
+                }
               </Route>
+              <Route path="/term-of-use" element={<Term />} />
+              <Route path="/privacy-policy" element={<Privacy />} />
               {/* <Route path="/login" element={<Login />} /> */}
-              <Route path="/" element={<AppProtected />}>
+              < Route path="/" element={<AppProtected />}>
                 <Route index element={<Dashboard />} />
                 {renderProtectedRoutes}
               </Route>
