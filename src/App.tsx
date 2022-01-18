@@ -58,11 +58,7 @@ const App = () => {
             <Routes>
               <Route path="/auth" element={<Auth />}>
                 <Route index element={<Login />} />
-                {
-                  anonymousRoutes.map((a) =>
-                    <Route key={a.name} path={a.path} element={<a.component />} />
-                  )
-                }
+                {anonymousRoutes.map((a) => <Route key={a.name} path={a.path} element={<a.component />} />)}
               </Route>
               <Route path="/term-of-use" element={<Term />} />
               <Route path="/privacy-policy" element={<Privacy />} />
