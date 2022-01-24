@@ -3,7 +3,7 @@ import {
     setPersistence, browserLocalPersistence, GoogleAuthProvider, GithubAuthProvider, FacebookAuthProvider, OAuthProvider
 } from "@firebase/auth";
 import { useFirebase } from "../firebase/FirebaseContext";
-import { CLEAR_CURRENT_USER, SET_CURRENT_USER, SET_LOGIN_STATUS, SET_SIDE_NAV, useAuth } from "./AuthContext";
+import { CLEAR_CURRENT_USER, SET_CURRENT_USER, SET_CURRENT_USER_ROLE, SET_LOGIN_STATUS, SET_SIDE_NAV, useAuth } from "./AuthContext";
 import { useLocation, useNavigate } from "react-router";
 import useFirebaseDB from "../firebase/useFirebaseDB";
 import { Provider } from "./provider.enum";
@@ -14,24 +14,38 @@ const useAuthAction = () => {
     const { firebaseState } = useFirebase();
     const { getById } = useFirebaseDB();
     const nav = useNavigate();
-    const { state } = useLocation();
+    const { state, pathname } = useLocation();
 
     const checkLogin = () => {
         const { auth } = firebaseState;
         auth?.onAuthStateChanged(async (user: User | null) => {
             if (user) {
+                console.log(user)
                 //user is signed in
                 const tokenClaim = await user.getIdTokenResult();
+                let profileData = {
+                    uid: user.uid,
+                    displayName: user.displayName,
+                    email: user.providerData[0].providerId === 'password'
+                        ? user.email : user.providerData[0].email,
+                    provider: user.providerData[0].providerId,
+                }
                 if (!tokenClaim?.claims?.role) {
+                    //set profile without role
+                    authDispatch({
+                        type: SET_CURRENT_USER,
+                        payload: profileData
+                    });
+
                     nav('/auth/register', { replace: true });
                     return;
                 }
-
+                //set profile with role
                 authDispatch({
                     type: SET_CURRENT_USER,
                     payload: {
-                        uid: user.uid,
-                        displayName: user.displayName,
+                        ...profileData,
+                        emailVerified: user.emailVerified,
                         role: tokenClaim.claims.role || ''
                     }
                 });
@@ -40,14 +54,16 @@ const useAuthAction = () => {
                 const fromPathname = (state as any)?.from?.pathname;
                 if (fromPathname) {
                     nav(fromPathname, { replace: true });
-                } else {
+                } else if (pathname && !pathname.startsWith('/auth/verify-email')) {
                     nav('/', { replace: true });
                 }
             } else {
                 //user is signed out
                 authDispatch({ type: CLEAR_CURRENT_USER });
                 authDispatch({ type: SET_LOGIN_STATUS, payload: false });
-                nav('/auth', { replace: true });
+                if (pathname && !pathname.startsWith('/auth/verify-email')) {
+                    nav('/auth', { replace: true });
+                }
             }
         })
     }
@@ -87,8 +103,7 @@ const useAuthAction = () => {
 
             // The signed-in user info.
             const user = result.user;
-            console.log(user)
-            //TODO: create data into users table            
+            console.log('@social', user)
 
         } catch (error: any) {
             console.error(error)
@@ -136,12 +151,30 @@ const useAuthAction = () => {
         await auth?.signOut();
     }
 
+    const refreshUser = async (redirect: boolean = true) => {
+        const { auth } = firebaseState;
+        const tokenClaim = await auth?.currentUser?.getIdTokenResult(true);
+        if (tokenClaim?.claims?.role) {
+            //set profile without role
+            authDispatch({
+                type: SET_CURRENT_USER_ROLE,
+                payload: tokenClaim?.claims?.role
+            });
+
+            authDispatch({ type: SET_LOGIN_STATUS, payload: true });
+            loadSideNav(tokenClaim.claims.role as string);
+            if (redirect)
+                nav('/', { replace: true });
+        }
+    }
+
     return {
         checkLogin,
         createPasswordAccount,
         login,
         loginWithSocial,
-        logout
+        logout,
+        refreshUser
     }
 }
 

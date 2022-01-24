@@ -9,9 +9,11 @@ const CreateAccount = () => {
     const nav = useNavigate();
     const { createPasswordAccount } = useAuthAction();
     const [errorMessage, setErrorMessage] = useState('');
+    const [loading, setLoading] = useState<boolean>(false);
 
     const onFinish = async (values: any) => {
         setErrorMessage('');
+        setLoading(true);
         const result = await createPasswordAccount(values.email, values.password);
 
         if (!result.success) {
@@ -22,6 +24,7 @@ const CreateAccount = () => {
                 default:
                     break;
             }
+            setLoading(false);
         }
     };
 
@@ -67,7 +70,7 @@ const CreateAccount = () => {
             </Form.Item>
             <Form.Item>
                 <Space direction="vertical" className="auth-space-full-width">
-                    <Button type="primary" block htmlType="submit">
+                    <Button type="primary" block htmlType="submit" loading={loading}>
                         <FormattedMessage id="GENERAL_NEXT" />
                     </Button>
                     <Button block htmlType="button" onClick={() => { nav(-1) }}>

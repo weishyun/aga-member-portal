@@ -21,18 +21,11 @@ const CountrySelector = ({ value = {}, onChange }: Props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    // useEffect(() => {
-    //     if (!value.isoCode) {
-    //         const defaultSelected: any = countries.find(c => c.isoCode === 'MY');
-    //         onChange?.(defaultSelected);
-    //     }// eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [countries]);
-
     const handleChange = (selectedValue: string) => {
         const value: any = countries.find(c => c.isoCode === selectedValue);
         onChange?.(value);
     }
-    console.log(value)
+
     return (
         <Select onChange={handleChange}
             placeholder={<FormattedMessage id="LABEL_SELECT_ONE" />}

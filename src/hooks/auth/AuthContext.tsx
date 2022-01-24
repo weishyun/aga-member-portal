@@ -9,14 +9,20 @@ interface AuthState {
     isLogin: boolean;
     uid: string | null;
     displayName: string | null;
-    role: string | null,
-    sideNav: SideNav[]
+    email: string | null;
+    emailVerified: boolean;
+    provider: string | null;
+    role: string | null;
+    sideNav: SideNav[];
 }
 
 const INITIAL_STATE: AuthState = {
     isLogin: false,
     uid: null,
     displayName: null,
+    email: null,
+    emailVerified: false,
+    provider: null,
     role: null,
     sideNav: []
 };
@@ -24,6 +30,7 @@ const INITIAL_STATE: AuthState = {
 export const SET_LOGIN_STATUS = "[AUTH] SET_LOGIN_STATUS";
 export const SET_LOGIN_ERROR = "[AUTH] SET_LOGIN_ERROR";
 export const SET_CURRENT_USER = "[AUTH] SET_CURRENT_USER";
+export const SET_CURRENT_USER_ROLE = "[AUTH] SET_CURRENT_USER_ROLE";
 export const CLEAR_CURRENT_USER = "[AUTH] CLEAR_CURRENT_USER";
 export const SET_SIDE_NAV = "[AUTH] SET_SIDE_NAV";
 
@@ -31,12 +38,21 @@ const reducer = (state: AuthState, action: { type: string, payload: any }): Auth
     const { type, payload } = action;
     switch (type) {
         case SET_CURRENT_USER:
-            const { role, uid, displayName } = payload;
+            const { role, uid, displayName, email,
+                emailVerified, provider } = payload;
             return {
                 ...state,
                 uid,
                 displayName,
+                email,
+                emailVerified,
+                provider,
                 role
+            }
+        case SET_CURRENT_USER_ROLE:
+            return {
+                ...state,
+                role: payload
             }
         case SET_LOGIN_STATUS:
             return { ...state, isLogin: payload };

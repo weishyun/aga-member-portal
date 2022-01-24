@@ -2,6 +2,7 @@ import { Alert, Button, Checkbox, Form, Input, Select, Space } from "antd";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/auth/AuthContext";
 import { useMasterData } from "../../hooks/master-data/MasterDataContext";
 import useBusinessNature from "../../hooks/master-data/useBusinessNature";
 import CountrySelector from "../../shared/components/CountrySelector";
@@ -9,6 +10,7 @@ import CountrySelector from "../../shared/components/CountrySelector";
 const RegisterEmployer = () => {
     const intl = useIntl();
     const nav = useNavigate();
+    const { authState } = useAuth();
     const { getBusinessNatures } = useBusinessNature();
     const { masterDataState } = useMasterData();
     const { businessNatures } = masterDataState;
@@ -23,7 +25,10 @@ const RegisterEmployer = () => {
     const onFinish = async (values: any) => {
         setErrorMessage('');
         const businessNature = businessNatures.find(b => b.value === values.businessNature);
-        values = { ...values, businessNature: { id: businessNature.value, name: businessNature.label } };
+        values = {
+            ...values,
+            businessNature: { id: businessNature.value, name: businessNature.label }
+        };
         console.log(values);
     };
 
@@ -35,6 +40,7 @@ const RegisterEmployer = () => {
             <Form form={form}
                 layout="vertical"
                 initialValues={{
+                    email: authState.email,
                     country: {
                         dialCode: "+60",
                         flag: "https://cdn.kcak11.com/CountryFlags/countries/my.svg",
@@ -49,7 +55,7 @@ const RegisterEmployer = () => {
                     rules={[
                         { required: true, message: `${intl.formatMessage({ id: 'GENERAL_REQUIRED' })}!` },
                         { type: 'email', message: 'Please enter a valid email.' }]}>
-                    <Input maxLength={255} />
+                    <Input maxLength={255} disabled={authState.provider === 'password'} />
                 </Form.Item>
                 <Form.Item
                     label={<FormattedMessage id="LABEL_FULLNAME" />}

@@ -2,16 +2,26 @@ import { Alert, Button, Checkbox, Form, Input, Space } from "antd";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/auth/AuthContext";
+import useAuthAction from "../../hooks/auth/useAuthAction";
+import useBasicProfile from "../../hooks/profile/useBasicProfile";
 import CountrySelector from "../../shared/components/CountrySelector";
 
 const RegisterGig = () => {
     const intl = useIntl();
     const nav = useNavigate();
+    const { authState } = useAuth();
+    const { refreshUser } = useAuthAction();
     const [errorMessage, setErrorMessage] = useState('');
+    const { createGigWorkerBasicProfile } = useBasicProfile();
+    const [loading, setLoading] = useState<boolean>(false);
 
     const onFinish = async (values: any) => {
         setErrorMessage('');
-        console.log(values);
+        setLoading(true);
+        await createGigWorkerBasicProfile(values);
+        setLoading(false);
+        refreshUser();
     };
 
     return (
@@ -22,6 +32,7 @@ const RegisterGig = () => {
             <Form
                 layout="vertical"
                 initialValues={{
+                    email: authState.email,
                     country: {
                         dialCode: "+60",
                         flag: "https://cdn.kcak11.com/CountryFlags/countries/my.svg",
@@ -36,11 +47,18 @@ const RegisterGig = () => {
                     rules={[
                         { required: true, message: `${intl.formatMessage({ id: 'GENERAL_REQUIRED' })}!` },
                         { type: 'email', message: 'Please enter a valid email.' }]}>
+                    <Input maxLength={255} disabled={authState.provider === 'password'} />
+                </Form.Item>
+                <Form.Item
+                    label={<FormattedMessage id="LABEL_FIRSTNAME" />}
+                    name="firstName"
+                    rules={[
+                        { required: true, message: `${intl.formatMessage({ id: 'GENERAL_REQUIRED' })}!` }]}>
                     <Input maxLength={255} />
                 </Form.Item>
                 <Form.Item
-                    label={<FormattedMessage id="LABEL_FULLNAME" />}
-                    name="displayName"
+                    label={<FormattedMessage id="LABEL_LASTNAME" />}
+                    name="lastName"
                     rules={[
                         { required: true, message: `${intl.formatMessage({ id: 'GENERAL_REQUIRED' })}!` }]}>
                     <Input maxLength={255} />
@@ -63,7 +81,7 @@ const RegisterGig = () => {
                 </Form.Item>
                 <Form.Item>
                     <Space direction="vertical" className="auth-space-full-width">
-                        <Button type="primary" block htmlType="submit">
+                        <Button type="primary" block htmlType="submit" loading={loading}>
                             <FormattedMessage id="LABEL_REGISTER" />
                         </Button>
                         <Button block htmlType="button" onClick={() => { nav(-1) }}>

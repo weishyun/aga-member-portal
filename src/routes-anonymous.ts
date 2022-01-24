@@ -23,6 +23,8 @@ const CreateAccount = ReactLazyPreload(() => import("./pages/auth/CreateAccount"
 CreateAccount.preload();
 const PasswordLogin = ReactLazyPreload(() => import("./pages/auth/PasswordLogin"));
 PasswordLogin.preload();
+//No need preload
+const VerifyEmail = ReactLazyPreload(() => import("./pages/auth/VerifyEmail"));
 
 export const anonymousRoutes: AnonymousRouteInfo[] = [
     {
@@ -49,5 +51,10 @@ export const anonymousRoutes: AnonymousRouteInfo[] = [
         name: 'PasswordLogin',
         path: '/auth/password-login',
         component: PasswordLogin
+    },
+    {
+        name: 'VerifyEmail',
+        path: '/auth/verify-email',
+        component: VerifyEmail
     }
 ];
